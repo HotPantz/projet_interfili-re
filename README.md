@@ -44,4 +44,4 @@ The primary objective is to design and develop an autonomous vehicle system that
 1. Clone the repository:
 
    ```bash
-   [git clone https://github.com/HotPantz/projet_interfilliaire.git](https://github.com/HotPantz/projet_interfilliaire.git)
+   [git clone https://github.com/HotPantz/projet_interfilliaire.git]
