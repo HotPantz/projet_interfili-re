@@ -45,3 +45,13 @@ The primary objective is to design and develop an autonomous vehicle system that
 
    ```bash
    git clone https://github.com/HotPantz/projet_interfilliaire.git
+
+2. Compile the code:
+
+   g++ -Wall sources/TrainAndTest.cpp -o recog `pkg-config --cflags --libs opencv4`
+
+3. Run the code:
+
+   ./recog
+
+   
