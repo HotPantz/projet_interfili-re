@@ -1,17 +1,19 @@
-// recog.h
-#ifndef RECOG_H
-#define RECOG_H
+// recog.hpp
+
+#ifndef RECOG_HPP
+#define RECOG_HPP
 
 #include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/ml/ml.hpp>
+#include <iostream>
+#include <vector>
 
-// Constants
-const float MIN_CONTOUR_AREA = 100.0;
+const int MIN_CONTOUR_AREA = 100;
 const int RESIZED_IMAGE_WIDTH = 20;
 const int RESIZED_IMAGE_HEIGHT = 30;
 
-// Class to store contour data
 class ContourWithData {
 public:
     std::vector<cv::Point> ptContour;
@@ -22,10 +24,7 @@ public:
     static bool sortByBoundingRectXPosition(const ContourWithData& cwdLeft, const ContourWithData& cwdRight);
 };
 
-// Function to preprocess image
 void preprocessImage(const cv::Mat& srcImage, cv::Mat& threshImage);
+std::string recognizeNumbers(const cv::Mat& threshImage, std::vector<ContourWithData>& validContours);
 
-// Function to recognize numbers in contours
-std::string recognizeNumbers(const cv::Mat& threshImage);
-
-#endif // RECOG_H
+#endif // RECOG_HPP

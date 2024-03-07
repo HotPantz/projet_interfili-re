@@ -1,4 +1,5 @@
 // recog.cpp
+
 #include "../headers/recog.hpp"
 #include <iostream>
 
@@ -13,17 +14,16 @@ bool ContourWithData::sortByBoundingRectXPosition(const ContourWithData& cwdLeft
 void preprocessImage(const cv::Mat& srcImage, cv::Mat& threshImage) {
     cv::Mat matGrayscale;
     cv::Mat matBlurred;
-    
+
     cv::cvtColor(srcImage, matGrayscale, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(matGrayscale, matBlurred, cv::Size(5, 5), 0);
     cv::adaptiveThreshold(matBlurred, threshImage, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C,
                           cv::THRESH_BINARY_INV, 11, 2);
 }
 
-std::string recognizeNumbers(const cv::Mat& threshImage) {
+std::string recognizeNumbers(const cv::Mat& threshImage, std::vector<ContourWithData>& validContours) {
     cv::Mat matThreshCopy = threshImage.clone();
-    std::vector<ContourWithData> allContoursWithData;
-    std::vector<ContourWithData> validContoursWithData;
+    std::vector<ContourWithData> allContours;
 
     std::vector<std::vector<cv::Point>> ptContours;
     std::vector<cv::Vec4i> v4iHierarchy;
@@ -35,23 +35,24 @@ std::string recognizeNumbers(const cv::Mat& threshImage) {
         contourWithData.ptContour = ptContours[i];
         contourWithData.boundingRect = cv::boundingRect(contourWithData.ptContour);
         contourWithData.fltArea = cv::contourArea(contourWithData.ptContour);
-        allContoursWithData.push_back(contourWithData);
+        allContours.push_back(contourWithData);
     }
 
     // Filter valid contours
-    for (int i = 0; i < allContoursWithData.size(); i++) {
-        if (allContoursWithData[i].checkIfContourIsValid()) {
-            validContoursWithData.push_back(allContoursWithData[i]);
+    for (int i = 0; i < allContours.size(); i++) {
+        if (allContours[i].checkIfContourIsValid()) {
+            validContours.push_back(allContours[i]);
         }
     }
 
     // Sort contours from left to right
-    std::sort(validContoursWithData.begin(), validContoursWithData.end(), ContourWithData::sortByBoundingRectXPosition);
+    std::sort(validContours.begin(), validContours.end(), ContourWithData::sortByBoundingRectXPosition);
 
     // Recognize numbers in contours
     std::string strFinalString;
-    for (int i = 0; i < validContoursWithData.size(); i++) {
-        strFinalString += std::to_string(i); // Placeholder for actual recognition logic
+    for (int i = 0; i < validContours.size(); i++) {
+        // Placeholder for actual recognition logic
+        strFinalString += std::to_string(i);
     }
 
     return strFinalString;
