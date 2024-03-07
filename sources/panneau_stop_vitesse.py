@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # Liste des noms de fichiers d'images
-image_files = ['feurouge.jpg', 'stop.jpeg', 'vitesse80.jpg', 'vitesse50.jpg', 'stop2.jpg', 'stop3.webp']
+image_files = ['../images/feurouge.jpg', '../images/stop.jpeg', '../images/vitesse80.jpg', '../images/vitesse50.jpg', '../images/stop2.jpg', '../images/stop3.webp']
 
 # Fonction pour vérifier si un polygone est rouge dans l'espace HSV
 def is_red_polygon_hsv(image, polygon):
@@ -85,14 +85,23 @@ def process_image(image):
                     color = (0, 0, 255)  # Rouge
                     # Ajouter des instructions pour le panneau de vitesse rouge
                     cv2.putText(image, "Panneau de vitesse rouge detecte.", (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
+                    fichier = open("data.txt", "w")
+                    fichier.write("Cerlce rouge detecte.")
+                    fichier.close()
                 elif blue_pixels > red_pixels:
                     message = "Cercle bleu detecte."
                     color = (255, 0, 0)  # Bleu
                     # Ajouter des instructions pour le panneau d'obligation de tourner bleu
                     cv2.putText(image, "Panneau d'obligation de tourner bleu detecte.", (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
+                    fichier = open("data.txt", "w")
+                    fichier.write("Cercle bleu detecte.")
+                    fichier.close()
                 else:
                     message = "Autre couleur."
                     color = (0, 255, 0)
+                    fichier = open("data.txt", "w")
+                    fichier.write("Autre couleur detecte.")
+                    fichier.close()
 
                 # Ajouter le message à la liste des messages
                 messages.append(message)
