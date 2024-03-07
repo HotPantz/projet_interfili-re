@@ -79,8 +79,8 @@ float findMeanLineY(Mat* img, int lineY){
 	threshold(line, line, 0, 255, THRESH_BINARY);
 
     //debug 
-    namedWindow("NonZero Image", WINDOW_AUTOSIZE);
-	imshow("NonZero Image", line);
+    //namedWindow("NonZero Image", WINDOW_AUTOSIZE);
+	//imshow("NonZero Image", line);
 
     findNonZero(line, nonzeroPoints); //on cherche les elements non 0 (non-noir) sur l'image masquée
     if(nonzeroPoints.empty()){ //if no non-zero points are found, we'll just go straight
@@ -98,4 +98,63 @@ float findMeanLineY(Mat* img, int lineY){
     }
 
     return sumX / count;
+}
+
+float findMiddle(Mat* img, int lineY){
+    // Ensure that the lineY coordinate is within the image bounds
+    if (lineY < 0 || lineY >= img->rows) {
+        cerr << "Position Y souhaitée de la ligne invalide" << endl;
+        return -1;
+    }
+
+    // Extract the specified line from the image
+    Mat line = (*img).row(lineY);
+   	vector<Point> nonzeroPointsLeft, nonzeroPointsRight;
+	
+	cvtColor((*img).row(lineY), line, COLOR_BGR2GRAY); //findNonZero attend une image binaire	
+	threshold(line, line, 0, 255, THRESH_BINARY);
+
+    //debug 
+    //namedWindow("NonZero Image", WINDOW_AUTOSIZE);
+	//imshow("NonZero Image", line);
+
+    int lineColsHalf = line.cols / 2, lineRowsHalf = line.rows / 2, leftMean = 0, rightMean = 0, nonZeroPtsCount, sumL = 0, sumR = 0;
+    Mat lineLeftPart = line(Rect(0, 0, lineColsHalf, line.rows));
+    Mat lineRightPart = line(Rect(lineColsHalf, 0, lineColsHalf, line.rows));
+    Point pnt;
+
+    //Left line mean position
+    findNonZero(lineLeftPart, nonzeroPointsLeft); //on cherche les elements non 0 (non-noir) sur l'image masquée
+    if(nonzeroPointsLeft.empty()){ //if no non-zero points are found, we'll just go straight
+        cerr << "Pas de pixels trouvés dans la zone gauche de l'image coupée!" << endl;
+        return img->rows / 2;
+    }
+    nonZeroPtsCount = nonzeroPointsLeft.size();
+    cout << "nonZeroPtsCount L: " << nonZeroPtsCount << endl;
+
+    for(int i = 0; i < nonZeroPtsCount; i++ ){
+        pnt = nonzeroPointsLeft[i];
+		sumL += pnt.x;
+        cout << pnt.x << endl;
+    }
+    leftMean = sumL / nonZeroPtsCount;
+    
+    //Right line mean position
+    findNonZero(lineRightPart, nonzeroPointsRight);
+    if(nonzeroPointsRight.empty()){ 
+        cerr << "Pas de pixels trouvés dans la zone droite de l'image coupée!" << endl;
+        return img->rows / 2;
+    }
+    nonZeroPtsCount = nonzeroPointsRight.size();
+    cout << "nonZeroPtsCount R: " << nonZeroPtsCount << endl;
+
+    for(int i = 0; i < nonZeroPtsCount; i++ ){
+        pnt = nonzeroPointsRight[i];
+		sumR += pnt.x;
+        cout << pnt.x << endl;
+    }
+    leftMean = sumR / nonZeroPtsCount;
+
+    //Mean of the left and right lines' positions
+    return (rightMean - leftMean) / 2;
 }

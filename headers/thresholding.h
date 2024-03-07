@@ -3,7 +3,7 @@ using namespace cv;
 #ifndef THRESH_H
 #define THRESH_H
 
-#define TESTIMG_FPATH "../images/lines.png"
+#define TESTIMG_FPATH "images/lines.png"
 
 /* HSV Color Range Values */
 #define HUE_LOW 61
@@ -23,8 +23,10 @@ Mat isolateColor(Mat* inputImg, Scalar lowHSV, Scalar upHSV);
 //Divide the image in divNum parts and return the nth part (parts numbered from 1-n)
 Mat getNthPart(Mat* inputImage, int divNum, int n, int width);
 
-//Finds the mean coordinates of non-zero values on a line @lineX coords of img 
+//Finds the mean coordinates of non-zero values on a line @lineY coords of img (of a part, not the entire image) 
 float findMeanLineY(Mat* img, int lineY);
 
+//Finds the middle position between 2 lines, having computed the horizontal mean position of the left and right lines
+float findMiddle(Mat* img, int lineY);
 
 #endif

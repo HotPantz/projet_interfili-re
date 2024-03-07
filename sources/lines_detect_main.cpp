@@ -44,7 +44,8 @@ int main(){
 	imshow("Cut Image", divImg);	
 	
 	float mid;
-	mid = findMeanLineY(&divImg, divImg.rows / 2); //get the mean value of non zero elements on the line at half the height of divImg 	
+	//mid = findMeanLineY(&divImg, divImg.rows / 2); //get the mean value of non zero elements on the line at half the height of divImg 	
+	mid = findMiddle(&divImg, divImg.rows / 2);
 	cout << "mid coord : " << mid << endl;
 
 	char key = (char) waitKey();
