@@ -1,5 +1,5 @@
 // recog.cpp
-#include "recog.h"
+#include "../headers/recog.hpp"
 #include <iostream>
 
 bool ContourWithData::checkIfContourIsValid() {

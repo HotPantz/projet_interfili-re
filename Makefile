@@ -8,15 +8,15 @@ CFLAGS := -Wall -Wextra -std=c++11 `pkg-config --cflags opencv4`
 OPENCV_LIBS := `pkg-config --libs opencv4`
 
 # Fichiers sources
-SRCS := main.cpp recog.cpp
+SRCS := sources/main.cpp sources/recog.cpp
 
 # Exécutable de sortie
 TARGET := recognition
 
 # Règle pour construire le programme
 $(TARGET): $(SRCS)
-    $(CC) $(CFLAGS) $^ -o $@ $(OPENCV_LIBS)
+	$(CC) $(CFLAGS) $^ -o $@ $(OPENCV_LIBS)
 
 # Règle pour nettoyer les fichiers générés
 clean:
-    rm -f $(TARGET)
+	rm -f $(TARGET)
