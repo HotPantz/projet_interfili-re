@@ -16,15 +16,20 @@ const int RESIZED_IMAGE_HEIGHT = 30;
 
 class ContourWithData {
 public:
-    std::vector<cv::Point> ptContour;
-    cv::Rect boundingRect;
-    float fltArea;
+    // member variables
+    std::vector<cv::Point> ptContour;           // contour
+    cv::Rect boundingRect;                      // bounding rect for contour
+    float fltArea;                              // area of contour
 
-    bool checkIfContourIsValid();
-    static bool sortByBoundingRectXPosition(const ContourWithData& cwdLeft, const ContourWithData& cwdRight);
+    bool checkIfContourIsValid() {                      // the countours will be determined by another program cf yanis
+        if (fltArea < MIN_CONTOUR_AREA) return false;
+        return true;
+    }
+
+    
+    static bool sortByBoundingRectXPosition(const ContourWithData& cwdLeft, const ContourWithData& cwdRight) {      // this function allows us to sort
+        return(cwdLeft.boundingRect.x < cwdRight.boundingRect.x);                                                   // the contours from left to right
+    }
 };
-
-void preprocessImage(const cv::Mat& srcImage, cv::Mat& threshImage);
-std::string recognizeNumbers(const cv::Mat& threshImage, std::vector<ContourWithData>& validContours);
 
 #endif // RECOG_HPP

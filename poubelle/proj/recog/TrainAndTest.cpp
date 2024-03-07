@@ -1,37 +1,15 @@
-// TrainAndTest.cpp
+
 
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
 #include<opencv2/ml/ml.hpp>
-#include "recog.hpp"
+#include "../headers/recog.hpp"
 
 #include<iostream>
 #include<sstream>
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-class ContourWithData {
-public:
-    // member variables ///////////////////////////////////////////////////////////////////////////
-    std::vector<cv::Point> ptContour;           // contour
-    cv::Rect boundingRect;                      // bounding rect for contour
-    float fltArea;                              // area of contour
-
-                                                ///////////////////////////////////////////////////////////////////////////////////////////////
-    bool checkIfContourIsValid() {                      // the countours will be determined by another program cf yanis
-        if (fltArea < MIN_CONTOUR_AREA) return false;
-        return true;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    static bool sortByBoundingRectXPosition(const ContourWithData& cwdLeft, const ContourWithData& cwdRight) {      // this function allows us to sort
-        return(cwdLeft.boundingRect.x < cwdRight.boundingRect.x);                                                   // the contours from left to right
-    }
-
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 int main() {
     std::vector<ContourWithData> allContoursWithData;           // declare empty vectors,
     std::vector<ContourWithData> validContoursWithData;         // we will fill these shortly

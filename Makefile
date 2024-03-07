@@ -8,10 +8,10 @@ CFLAGS := -Wall -Wextra -std=c++11 `pkg-config --cflags opencv4`
 OPENCV_LIBS := `pkg-config --libs opencv4`
 
 # Fichiers sources
-SRCS := sources/main.cpp sources/recog.cpp
+SRCS := sources/main.cpp
 
 # Exécutable de sortie
-TARGET := recognition
+TARGET := recog
 
 # Règle pour construire le programme
 $(TARGET): $(SRCS)
