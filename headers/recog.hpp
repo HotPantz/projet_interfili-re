@@ -14,6 +14,8 @@ const int MIN_CONTOUR_AREA = 100;
 const int RESIZED_IMAGE_WIDTH = 20;
 const int RESIZED_IMAGE_HEIGHT = 30;
 
+int recog(void);
+
 class ContourWithData {
 public:
     // member variables
