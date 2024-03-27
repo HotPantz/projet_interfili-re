@@ -41,7 +41,7 @@ int recog(void) {
     kNearest->train(matTrainingImagesAsFlattenedFloats, cv::ml::ROW_SAMPLE, matClassificationInts); // Train the model
 
     // Load test image
-    cv::Mat matTestingNumbers = cv::imread("/media/sf_Echange/projet_interfili-re/images/panneau52.png");            // Read in the test numbers image
+    cv::Mat matTestingNumbers = cv::imread("/media/sf_Echange/projet_interfili-re/signs/sign.jpg");            // Read in the test numbers image
 
     if (matTestingNumbers.empty()) {                                // Check if unable to open image
         std::cout << "error: image not read from file\n\n";         // Display error message
