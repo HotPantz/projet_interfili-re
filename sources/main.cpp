@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "/media/sf_Echange/projet_interfili-re/headers/recog.hpp"
+#include "../headers/recog.hpp"
 
 int main() {
     
@@ -21,7 +21,7 @@ int main() {
 
     if(pid == 0){
 
-        const char *args[] = {"python", "/media/sf_Echange/projet_interfili-re/sources/yaya.py", nullptr}; // Program name and its arguments
+        const char *args[] = {"python", "/home/hotpantz/Documents/projet_interfili-re/sources/yaya.py", nullptr}; // Program name and its arguments
         execvp("python", const_cast<char *const *>(args)); // Execute the Python script
         perror("execvp"); // Print error message if execvp fails
     }
@@ -32,7 +32,7 @@ int main() {
             printf("test 1\n");
 
             // Read data from file
-            std::ifstream file("/media/sf_Echange/projet_interfili-re/data/data.txt");
+            std::ifstream file("/home/hotpantz/Documents/projet_interfili-re/data/data.txt");
             if (!file.is_open()) {
                 std::cerr << "Error: Unable to open data.txt\n";
                 return 1;

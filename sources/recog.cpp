@@ -3,7 +3,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/ml/ml.hpp>
 #include <iostream>
-#include "/media/sf_Echange/projet_interfili-re/headers/recog.hpp"
+#include "../headers/recog.hpp"
 
 int recog(void) {
     std::vector<ContourWithData> allContoursWithData;           // Declare vectors to store all contours and valid contours
@@ -12,7 +12,7 @@ int recog(void) {
     // Read in training classifications
     cv::Mat matClassificationInts;      // Matrix to store the classification numbers
 
-    cv::FileStorage fsClassifications("/media/sf_Echange/projet_interfili-re/xml/classifications.xml", cv::FileStorage::READ);        // Open the classifications file
+    cv::FileStorage fsClassifications("/home/hotpantz/Documents/projet_interfili-re/xml/classifications.xml", cv::FileStorage::READ);        // Open the classifications file
 
     if (fsClassifications.isOpened() == false) {                                                    // Check if the file was opened successfully
         std::cout << "error, unable to open training classifications file, exiting program\n\n";    // Display error message
@@ -25,7 +25,7 @@ int recog(void) {
     // Read in training images
     cv::Mat matTrainingImagesAsFlattenedFloats;         // Matrix to store multiple images
 
-    cv::FileStorage fsTrainingImages("/media/sf_Echange/projet_interfili-re/xml/images.xml", cv::FileStorage::READ);          // Open the training images file
+    cv::FileStorage fsTrainingImages("/home/hotpantz/Documents/projet_interfili-re/xml/images.xml", cv::FileStorage::READ);          // Open the training images file
 
     if (fsTrainingImages.isOpened() == false) {                                                 // Check if the file was opened successfully
         std::cout << "error, unable to open training images file, exiting program\n\n";         // Display error message
@@ -41,7 +41,7 @@ int recog(void) {
     kNearest->train(matTrainingImagesAsFlattenedFloats, cv::ml::ROW_SAMPLE, matClassificationInts); // Train the model
 
     // Load test image
-    cv::Mat matTestingNumbers = cv::imread("/media/sf_Echange/projet_interfili-re/signs/sign.jpg");            // Read in the test numbers image
+    cv::Mat matTestingNumbers = cv::imread("/home/hotpantz/Documents/projet_interfili-re/images/panneau52.png");            // Read in the test numbers image
 
     if (matTestingNumbers.empty()) {                                // Check if unable to open image
         std::cout << "error: image not read from file\n\n";         // Display error message
